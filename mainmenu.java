@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Scanner;
+
 
 public class mainmenu {
 	
@@ -50,6 +50,7 @@ public class mainmenu {
 	    		areyousure.setSize(250,150);
 	    		areyousure.setResizable(false);
 	    		areyousure.setLocationRelativeTo(null); //Centers frame
+	    		areyousure.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    		JLabel LabelSure = new JLabel("Are you Sure you want to Exit?");
 	    			    		
 	    		LabelSure.setBounds(35,5,300,40);
@@ -96,14 +97,26 @@ public class mainmenu {
 	    	}
 	    });
 	    
-	    
+	    //Creates a load game panel with buttons to different save games
+	    JPanel GameLoad = new JPanel();
+	    GameLoad.setBounds(210, 204, 111, 110);	   
+	    GameLoad.setBorder(BorderFactory.createLineBorder(Color.black));
+	    GameLoad.setBackground(new java.awt.Color(191,191,191));
+	    JButton game1 = new JButton("Save Game 1");
+	    JButton game2 = new JButton("Save Game 2");
+	    JButton game3 = new JButton("Save Game 3");
+	    GameLoad.add(game1);
+	    GameLoad.add(game2);
+	    GameLoad.add(game3);
+	    GameLoad.setVisible(false);
 	    
 	    //Defines the "LoadGame" button's function
 	    LoadGame.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		
+	    		GameLoad.setVisible(true);
 	    	}
 	    });
+	    
 	    
 	    
 	    
@@ -111,6 +124,7 @@ public class mainmenu {
 	    Settings.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		JFrame fsettings = new JFrame("Settings"); //Makes another frame to pop up when button "Settings" is pressed
+	    		fsettings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    		fsettings.setSize(400,200);
 	    		fsettings.setVisible(true);
 	    		fsettings.setLocationRelativeTo(null);
@@ -128,7 +142,7 @@ public class mainmenu {
 	    		settingheight.setBounds(230,60,50,20);
 	    		
 	    		
-	    		//Creates two labels
+	    		//Creates two labels - does nothing at the moment
 	    		JLabel SetW = new JLabel("Enter Desired Width");
 	    		fsettings.add(SetW);
 	    		SetW.setBounds(70,40,200,20);
@@ -157,77 +171,77 @@ public class mainmenu {
 	    	}
 	    });
 	    
-	    JPanel GameLoad = new JPanel();
-	    GameLoad.setBounds(210, 204, 110, 160);	   
-	    GameLoad.setBorder(BorderFactory.createLineBorder(Color.black));
-	    GameLoad.setBackground(new java.awt.Color(191,191,191));
-	    GameLoad.setVisible(true);
+	    
 	    
 	    frame.add(GameLoad);
 	    frame.setLayout(null);	//Gives the frame no layout
 	    frame.setVisible(true); //Makes the frame visible
-	    
-	    
+	  	    
 	    
 	    
 	}
+	
 //---------------------Character Creation Window---------------------\\
 	
 	public static void CharacterCreation() {
 		JFrame cc = new JFrame("Character Creation");
-		cc.setSize(width,height);
-		cc.setVisible(true);
+		cc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cc.setSize(350,100);
 		cc.setLocationRelativeTo(null);
 		cc.setResizable(false);
-	}
-		//TODO: put this a different place (maybe?)
-		public static void explorationloop() {
-			boolean exploring = True;
-			//Exploration loop
-			while (exploring) {
-			
-			//TODO:Before we roll for room, give players some small favor text, telling them how they travel through the dungeon
-			//TODO: Add save game option here
-
-			//Rolling for room type
-				Random room = ThreadLocalRandom.current(2);
-				//code for different rooms
-				//TODO: Add different chances to get different rooms
-				switch (room) {
-					
-					//Combat room
-					case 0:
-					//TODO: Insert combat room code here
-					System.out.println("Test1")
-					break;
-
-					//Exploration room
-					case 1:
-					//TODO: Insert exploration room code here
-					System.out.println("Test2")
-					break;
-
-					//Treasure room
-					case 2:
-					//TODO: Add treasure room code here
-					System.out.println("Test3")
-					break;
-
-					//OPTIONAL: Add more room types here, by adding more cases
-
-					default:
-					//TODO: Add empty room code here
-					System.out.println("TestDefault")
-
-
-
-
-				}
-
+		JPanel csticks = new JPanel();
+		csticks.setBounds(0, 10, 350, 100);
+		cc.setLayout(null);
+		JButton Continue = new JButton("Continue");
+		Continue.setBounds(0, 10, 10, 10);
+		JLabel entername = new JLabel("Enter Name: ");
+		JTextField c_name = new JTextField(10);
+		csticks.add(entername);
+		csticks.add(c_name);
+		csticks.add(Continue);
 		
-			}
-		}
-
+		cc.add(csticks);
+		cc.setVisible(true);
+		
+		//Buttons inside character creation window
+		Continue.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) { 
+		       GameWindow();
+		       cc.dispose();
+		    }  
+		});
+		
+		//Takes the text from c_name as a string
+		c_name.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        String p_name = c_name.getText(); 
+		    }  
+		});
+			
+		
+		
+		
+		
+	}
+		
+//-----------------------------GamePlay Window--------------------------\\
+	
+	public static void GameWindow() {
+		JFrame fgame = new JFrame("Game Window");
+		fgame.setSize(width,height);
+		fgame.setLocationRelativeTo(null);
+		JPanel textpanel = new JPanel();
+		
+		
+		fgame.add(textpanel);
+		fgame.setLayout(null);
+		fgame.setVisible(true);
+		
+	
+	  
+	
+	}
+		
 }
 
 
