@@ -8,7 +8,7 @@ public class combat {
 		Random rand = new Random();
 		// delete later
 		int temp_hp = 15; 
-		int temp_speed = 10;
+		int temp_speed = 1;
 		int temp_attack = 6;
 		int temp_ac = 16;
 		// delete later
@@ -49,8 +49,40 @@ public class combat {
 					System.out.println("The " + name + " misses you!");
 				}
 				}
+			//enemy moves first
+			else if (speed>temp_speed) {
+				int bonus = rand.nextInt(20);
+				//the enemy hits
+				if (attack + bonus>temp_ac) {
+					System.out.println("You are attacked by the " + name + " and it hits \n");
+					temp_hp = temp_hp - (attack/2);
+					System.out.println("Your hp is now: " + temp_hp + "\n");
 				}
-			return temp_hp;
+				//enemy misses
+				else if (attack + bonus<temp_ac) {
+					System.out.println("The " + name + " misses you!");
+				}
+				//player attacks
+				System.out.print("Do you want to attack? (1)");
+				int valg = tastatur.nextInt();
+				switch (valg) {
+				case 1:
+					if (bonus + temp_attack>=ac) {
+						int damage = rand.nextInt(7)+1;
+						hp = hp - damage;
+						System.out.println("You hit the " + name + " and deal " + damage + " damage to it \n");
+						System.out.println("enemy hp: " + hp);
+						
+					}
+					//you miss your attack
+					else if (bonus+temp_attack<ac){
+						System.out.println("You miss your attack \n");
+					}
+			}
+				}
+			
+		}
+		return temp_hp;
 			}
 		
 		
@@ -76,7 +108,7 @@ public class combat {
 		
 		switch (enemy_type) {
 		case 0:
-			//for the goblin encounter
+			//stats for the goblin encounter
 			enemy goblin = new enemy();
 			goblin.speed = 7;
 			System.out.println(goblin.speed);
@@ -92,7 +124,7 @@ public class combat {
 			break;
 		
 		case 1:
-			//for the orc encounter
+			//stats for the orc encounter
 			enemy orc = new enemy();
 			orc.speed = 4;
 			System.out.println(orc.speed);
@@ -108,7 +140,7 @@ public class combat {
 			break;
 			
 		case 2:
-			//for the mimic encounter
+			//stats for the mimic encounter
 			enemy mimic = new enemy();
 			mimic.speed = 2;
 			System.out.println(mimic.speed);
@@ -124,7 +156,7 @@ public class combat {
 			break;
 			
 		case 3:
-			//for the hobgoblin encounter
+			//stats for the hobgoblin encounter
 			enemy hgoblin = new enemy();
 			hgoblin.speed = 6;
 			System.out.println("enemy speed: " + hgoblin.speed);
