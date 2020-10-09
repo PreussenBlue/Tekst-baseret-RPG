@@ -186,12 +186,13 @@ public class mainmenu {
 	public static void CharacterCreation() {
 		JFrame cc = new JFrame("Character Creation");
 		cc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cc.setSize(350,100);
+		cc.setSize(300,200);
 		cc.setLocationRelativeTo(null);
 		cc.setResizable(false);
+		//Choose name
 		JPanel csticks = new JPanel();
 		csticks.setBounds(0, 10, 350, 100);
-		cc.setLayout(null);
+		
 		JButton Continue = new JButton("Continue");
 		Continue.setBounds(0, 10, 10, 10);
 		JLabel entername = new JLabel("Enter Name: ");
@@ -200,7 +201,9 @@ public class mainmenu {
 		csticks.add(c_name);
 		csticks.add(Continue);
 		
+	
 		cc.add(csticks);
+		cc.setLayout(null);
 		cc.setVisible(true);
 		
 		//Buttons inside character creation window
@@ -217,6 +220,59 @@ public class mainmenu {
 		        String p_name = c_name.getText(); 
 		    }  
 		});
+		//Age
+		JLabel enterage = new JLabel("Enter your age: ");
+		JTextField c_age = new JTextField(10);
+		csticks.add(enterage);
+		csticks.add(c_age);
+		csticks.add(Continue);
+		
+		cc.add(csticks);
+		cc.setLayout(null);
+		cc.setVisible(true);
+		
+		//Buttons inside character creation window
+		Continue.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) { 
+		       GameWindow();
+		       cc.dispose();
+		    }  
+		});
+		
+		//Takes the text from c_age as a string
+		c_age.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        String p_age = c_age.getText(); 
+		    }  
+		});
+
+		//Gender (Is it a social construct? IDK, we're progressive though)
+		JLabel entergender = new JLabel("Enter your gender: ");
+		JTextField c_gender = new JTextField(10);
+		csticks.add(entergender);
+		csticks.add(c_gender);
+		csticks.add(Continue);
+		
+		cc.add(csticks);
+		cc.setLayout(null);
+		cc.setVisible(true);
+		
+		//Buttons inside character creation window
+		Continue.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) { 
+		       GameWindow();
+		       cc.dispose();
+		    }  
+		});
+		
+		//Takes the text from c_age as a string
+		c_age.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        String p_gender = c_gender.getText(); 
+		    }  
+		});
+
+
 			
 		
 		
@@ -241,7 +297,55 @@ public class mainmenu {
 	  
 	
 	}
+
+	//The exploration loop
+	//TODO: put this a different place
+	public static void explorationloop() {
+		boolean exploring = True;
+		//Exploration loop
+		while (exploring) {
 		
+		//TODO:Before we roll for room, give players some small favor text, telling them how they travel through the dungeon
+		//TODO: Add save game option here
+
+		//Rolling for room type
+			Random room = ThreadLocalRandom.current(2);
+			//code for different rooms
+			//TODO: Add different chances to get different rooms
+			switch (room) {
+				
+				//Combat room
+				case 0:
+				//TODO: Insert combat room code here
+				System.out.println("Test1")
+				break;
+
+				//Exploration room
+				case 1:
+				//TODO: Insert exploration room code here
+				System.out.println("Test2")
+				break;
+
+				//Treasure room
+				case 2:
+				//TODO: Add treasure room code here
+				System.out.println("Test3")
+				break;
+
+				//OPTIONAL: Add more room types here, by adding more cases
+
+				default:
+				//TODO: Add empty room code here
+				System.out.println("TestDefault")
+
+
+
+
+		}
+
+
+	}
+}
 }
 
 
