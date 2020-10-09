@@ -12,7 +12,6 @@ public class mainmenu {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		//Makes and defines the frame
 		JFrame frame = new JFrame("GUI");	//Makes a frame
@@ -181,7 +180,54 @@ public class mainmenu {
 		cc.setLocationRelativeTo(null);
 		cc.setResizable(false);
 	}
+		//TODO: put this a different place (maybe?)
+		public static void explorationloop() {
+			boolean exploring = True;
+			//Exploration loop
+			while (exploring) {
+			
+			//TODO:Before we roll for room, give players some small favor text, telling them how they travel through the dungeon
+			//TODO: Add save game option here
+
+			//Rolling for room type
+				Random room = ThreadLocalRandom.current(2);
+				//code for different rooms
+				//TODO: Add different chances to get different rooms
+				switch (room) {
+					
+					//Combat room
+					case 0:
+					//TODO: Insert combat room code here
+					System.out.println("Test1")
+					break;
+
+					//Exploration room
+					case 1:
+					//TODO: Insert exploration room code here
+					System.out.println("Test2")
+					break;
+
+					//Treasure room
+					case 2:
+					//TODO: Add treasure room code here
+					System.out.println("Test3")
+					break;
+
+					//OPTIONAL: Add more room types here, by adding more cases
+
+					default:
+					//TODO: Add empty room code here
+					System.out.println("TestDefault")
+
+
+
+
+				}
+
 		
+			}
+		}
+
 }
 
 
