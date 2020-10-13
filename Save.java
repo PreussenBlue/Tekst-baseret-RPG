@@ -37,17 +37,41 @@ public class Save {
 
 
     private static final String createTableSQLI = "create table inventory(\r\n" +
-            "id   varchar(3) primary key,\r\n" +
-            "item_name varchar(10),\r\n" +
-            "modS int(5),\r\n" +
-            "modAC int(5),\r\n" +
-            "modA int(5),\r\n" +
-            "modHP int(5),\r\n" +
+            " id    varchar(3) primary key,\r\n" +
+            " id_save varchar(3),\r\n" +
+            " item_name varchar(10),\r\n" +
+            " modS int(5),\r\n" +
+            " modAC int(5),\r\n" +
+            " modA int(5),\r\n" +
+            " modHP int(5),\r\n" +
+            "equipped int(5)\r\n" +
             " );";
 
-    private static final String QUERY = "select id,name,age,race,class,SaveName from character";
+    private static final String[] updateSetI = {
+            "update inventory set item_name = ",
+            "update inventory set modS = ",
+            "update inventory set modAC = ",
+            "update inventory set modA = ",
+            "update inventory set modHP = ",
+            "update inventory set id_save = ",
+            "update inventory set equipped = "
 
+    };
 
+    private static final String[] GetI = {
+            "select id from inventory where id_save = '%s' and (equipped = %s)",
+            "select id from inventory where id_save = '%s' and (item_name = %s)",
+            "select id from inventory where id_save = '%s' and (modS = %s)",
+            "select id from inventory where id_save = '%s' and (modAC = %s)",
+            "select id from inventory where id_save = '%s' and (modA = %s)",
+            "select id from inventory where id_save = '%s' and (modHP = %s)"
+    };
+
+    private static final String QUERY_C = "select id,name,age,race,gender,class,HP,speed,attack,AC,SaveName from character";
+
+    private static final String QUERY_I ="select id,id_save,item_name,modS,modAC,modA,modHP,equipped from inventory";
+
+    private static final String QUERY_iV = "select id,id_save,item_name,modS,modAC,modA,modHP,equipped from inventory where id_save = ";
 
     public static void main(String[] argv) throws SQLException{
 
@@ -62,9 +86,7 @@ public class Save {
 
     public void SQLMainCreateTable() throws SQLException{
 
-        Scanner Input = new Scanner(System.in);
-        int UserInput = Input.nextInt();
-        System.out.println(UserInput);
+
 
 
         Connection c;
@@ -72,10 +94,7 @@ public class Save {
 
 
         Save CreateCharacter  = new Save();
-        Save UpdateCharacter = new Save();
-        Save RemoveCharacter = new Save();
-        Save GetCharacter = new Save();
-        Save InputCharacter = new Save();
+
 
         try {
 
@@ -85,52 +104,51 @@ public class Save {
 
             try {
                 CreateCharacter.createTableC(c);
-                CreateCharacter.createTableI(c);
-            }catch (SQLException e){//printSQLException(e);
+
+            }catch (SQLException e){printSQLException(e);
                  }
 
+            try {
+                CreateCharacter.createTableI(c);
+            }catch (SQLException e){printSQLException(e);};
 
-            if (UserInput == 1){
                 //UpdateCharacter.UpdateCharacterS(c,);
-                
-            }
-
-            if (UserInput == 2){
-
-                ArrayList<String> idA =  GetCharacterId(c);
-                String id = idA.get(0);
-
-                RemoveCharacter.RemoveCharacterS(c,id);
-                GetCharacter.GetCharacterS(c);
 
 
-            }
+                //ArrayList<String> idA =  GetCharacterId(c);
+                //String id = idA.get(0);
 
-            if (UserInput == 3){
-
-                ArrayList<String> PRS = GetCharacter.GetCharacterS(c);
-
-                System.out.println(PRS.get(0));
-            }
-
-            if (UserInput == 4){
-
-                ArrayList<String> CharacterInfo = new ArrayList<>();
-
-                CharacterInfo.add("hero steve");
-                CharacterInfo.add("30");
-                CharacterInfo.add("human");
-                CharacterInfo.add("");
-                CharacterInfo.add("warriors");
-                CharacterInfo.add("");
-                CharacterInfo.add("");
-                CharacterInfo.add("");
-                CharacterInfo.add("");
-                CharacterInfo.add("new");
+                //RemoveCharacter.RemoveCharacterS(c,id);
+                //GetCharacter.GetCharacterS(c);
 
 
-                InputCharacter.InputCharacterS(c,CharacterInfo);
-            }
+
+
+
+
+                //ArrayList<String> PRS = GetCharacter.GetCharacterS(c);
+
+                //System.out.println(PRS.get(0));
+
+
+
+
+                //ArrayList<String> CharacterInfo = new ArrayList<>();
+
+                //CharacterInfo.add("hero steve");
+                //CharacterInfo.add("30");
+                //CharacterInfo.add("human");
+                //CharacterInfo.add("");
+                //CharacterInfo.add("warriors");
+                //CharacterInfo.add("");
+                //CharacterInfo.add("");
+                //CharacterInfo.add("");
+                //CharacterInfo.add("");
+                //CharacterInfo.add("new");
+
+
+                //InputCharacter.InputCharacterS(c,CharacterInfo);
+
 
             c.close();
         } catch (SQLException e) {
@@ -172,9 +190,9 @@ public class Save {
 
     }
 
-    public void UpdateCharacterS(Connection c, String[] UpdateC, String NVUSet, String NVUToo,int CommandV) throws SQLException{
+    public void UpdateCharacterS(Connection c, String[] UpdateC, String NVUSet, String NVUId,int CommandV) throws SQLException{
 
-        String UpdateCharacterSQL = String.format(UpdateC[CommandV] + "\"%s\" where id = '%s';",NVUSet,NVUToo);
+        String UpdateCharacterSQL = String.format(UpdateC[CommandV] + "\"%s\" where id = '%s';",NVUSet,NVUId);
         Statement statement = c.createStatement();
 
         statement.executeUpdate(UpdateCharacterSQL);
@@ -197,7 +215,7 @@ public class Save {
     public ArrayList<String> GetCharacterS(Connection c) throws SQLException{
 
         Statement statement = c.createStatement();
-        ResultSet rs = statement.executeQuery(QUERY);
+        ResultSet rs = statement.executeQuery(QUERY_C);
 
         ArrayList<String>RS = new ArrayList<>();
 
@@ -229,7 +247,7 @@ public class Save {
     public ArrayList<String> GetCharacterId(Connection c) throws SQLException{
 
         Statement statement = c.createStatement();
-        ResultSet rs = statement.executeQuery(QUERY);
+        ResultSet rs = statement.executeQuery(QUERY_C);
 
         ArrayList<String>RS = new ArrayList<>();
 
@@ -252,23 +270,23 @@ public class Save {
 
 
 
-    public void InputCharacterS(Connection c, ArrayList<String> CharacterInfo) throws SQLException{
+    public void InputCharacterS(Connection c, String[] CharacterInfo) throws SQLException{
 
         Instant id = Instant.now();
 
         String InsertDataC = "insert into character " + String.format(
                 "VALUES ( '%s' , '%s', %s, '%s', '%s', '%s','%s','%s','%s','%s','%s');",
                 id,
-                CharacterInfo.get(0),
-                CharacterInfo.get(1),
-                CharacterInfo.get(2),
-                CharacterInfo.get(3),
-                CharacterInfo.get(4),
-                CharacterInfo.get(5),
-                CharacterInfo.get(6),
-                CharacterInfo.get(7),
-                CharacterInfo.get(8),
-                CharacterInfo.get(9)
+                CharacterInfo[0],
+                CharacterInfo[1],
+                CharacterInfo[2],
+                CharacterInfo[3],
+                CharacterInfo[4],
+                CharacterInfo[5],
+                CharacterInfo[6],
+                CharacterInfo[7],
+                CharacterInfo[8],
+                CharacterInfo[9]
 
 
         );
@@ -282,13 +300,15 @@ public class Save {
 
     //item
 
-    public void UpdateItems(Connection c, String[] UpdateC, String NVUSet, String NVUToo,int CommandV) throws SQLException{
+    public void UpdateItems(Connection c, String NVUSet, String NVUToo,int CommandV) throws SQLException{
 
-        String UpdateCS = UpdateC[CommandV];
+        String UpdateCS = updateSetI[CommandV];
 
         //"update character set age = "
 
-        String UpdateCharacterSQL = String.format(UpdateCS + "\"%s\"" +" where id = '%s';",NVUSet,NVUToo);
+        String UpdateCharacterSQL = String.format(UpdateCS + "%s" +" where id = '%s';",NVUSet,NVUToo);
+
+        System.out.println(UpdateCharacterSQL);
 
         Statement statement = c.createStatement();
 
@@ -306,6 +326,124 @@ public class Save {
         return statement.executeUpdate(RemoveSQL);
 
 
+
+    }
+
+    public ArrayList<String> GetItems(Connection c,String CId) throws SQLException{
+
+        Statement statement = c.createStatement();
+        //try {
+            ResultSet rs = statement.executeQuery(QUERY_I);
+
+        ArrayList<String>RS = new ArrayList<>();
+
+
+        while (rs.next()){
+
+
+            String idSaveC = rs.getString("id_Save");
+            if (CId.equals(idSaveC)) {
+
+                String id = rs.getString("id");
+                String idSave = rs.getString("id_Save");
+                String Items_name = rs.getString("Item_name");
+                int modS = rs.getInt("modS");
+                String modAC = rs.getString("modAC");
+                String modA = rs.getString("modA");
+                String modHP = rs.getString("modHP");
+
+
+                String Rs = "(" + id + ", " + idSave + "," + Items_name + ", " + modS + ", " + modAC + ", " + modA + ", " + modHP + ")";
+
+
+                RS.add(Rs);
+            }
+
+        }
+
+
+        return RS;
+        //}catch (SQLException e){
+            //ArrayList<String> f = new ArrayList<>();
+            //f.add("no items!");
+            //return f;
+
+        //}
+    }
+
+    public String Get1Item_id(Connection c,String id_save,String uni,int commandV) throws SQLException{
+
+        Statement statement = c.createStatement();
+        String Amore = GetI[commandV];
+
+        String f = String.format(Amore,id_save,uni);
+
+        ResultSet rs = statement.executeQuery(f);
+        String id = rs.getString("id");
+
+        return id;
+
+    }
+
+    public int InputItems(Connection c,String[] ItemInfo,String IdSave) throws SQLException{
+
+        Instant id = Instant.now();
+
+        String InsertDataC = "insert into inventory " + String.format(
+                "VALUES ( '%s' , '%s', '%s', %s, %s, %s, %s,%s);",
+                id,
+                IdSave,
+                ItemInfo[0],
+                ItemInfo[1],
+                ItemInfo[2],
+                ItemInfo[3],
+                ItemInfo[4],
+                ItemInfo[5]
+
+        );
+
+        Statement statement = c.createStatement();
+        int result = statement.executeUpdate(InsertDataC);
+
+        statement.close();
+        return result;
+
+    }
+
+    public int[] get_CV_ints(Connection c,String id) throws SQLException{
+
+        Statement statement = c.createStatement();
+
+        String AMore = QUERY_C + String.format("'%s'",id);
+
+        ResultSet rs = statement.executeQuery(AMore);
+
+
+        System.out.println(rs);
+
+        int speed = rs.getInt("speed");
+        int AC = rs.getInt("AC");
+        int attack = rs.getInt("attack");
+        int HP = rs.getInt("HP");
+
+        return new int[]{speed,AC,attack,HP};
+
+    }
+
+    public int[] get_IV_ints(Connection c,String id) throws SQLException{
+
+        Statement statement = c.createStatement();
+
+        String AMore = QUERY_iV + String.format("'%s'",id) + String.format(" and (equipped = '%s')","1");
+
+        ResultSet rs = statement.executeQuery(AMore);
+
+        int speed = rs.getInt("modS");
+        int AC = rs.getInt("modAC");
+        int attack = rs.getInt("modA");
+        int HP = rs.getInt("modHP");
+
+        return new int[]{speed,AC,attack,HP};
 
     }
 
