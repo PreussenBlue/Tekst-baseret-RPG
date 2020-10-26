@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 
 
 public class mainmenu {
@@ -186,12 +187,12 @@ public class mainmenu {
 	public static void CharacterCreation() {
 		JFrame cc = new JFrame("Character Creation");
 		cc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cc.setSize(300,200);
 		cc.setLocationRelativeTo(null);
 		cc.setResizable(false);
+		cc.setSize(800, 800);
 		//Choose name
 		JPanel csticks = new JPanel();
-		csticks.setBounds(0, 10, 350, 100);
+		csticks.setBounds(100, 150, 600, 200);
 		
 		JButton Continue = new JButton("Continue");
 		Continue.setBounds(0, 10, 10, 10);
@@ -271,9 +272,24 @@ public class mainmenu {
 		        String p_gender = c_gender.getText(); 
 		    }  
 		});
-
-
 			
+		final String[] easy_Q = {
+            "p_name",//name
+            "p_age",//age
+            "Human",//race
+            "p_gender",//gender
+            "Dude",//class - fuck if i know
+            "20",//hp
+            "7",//speed
+            "7",//attack
+            "16",//AC
+            "Character_save",//SaveGame
+
+    };
+
+
+	
+
 		
 		
 		
@@ -310,45 +326,36 @@ public class mainmenu {
 
 		//Rolling for room type
 			Random room = ThreadLocalRandom.current(2);
-			//code for different rooms
+			//code for different rooms 
 			//TODO: Add different chances to get different rooms
 			switch (room) {
 				
 				//Combat room
 				case 0:
 				//TODO: Insert combat room code here
-				System.out.println("Test1")
+				System.out.println("Test1");
 				break;
 
 				//Exploration room
 				case 1:
 				//TODO: Insert exploration room code here
-				System.out.println("Test2")
+				System.out.println("Test2");
 				break;
 
 				//Treasure room
 				case 2:
 				//TODO: Add treasure room code here
-				System.out.println("Test3")
+				System.out.println("Test3");
 				break;
 
 				//OPTIONAL: Add more room types here, by adding more cases
 
 				default:
 				//TODO: Add empty room code here
-				System.out.println("TestDefault")
-
-
-
-
-		}
+				System.out.println("TestDefault");
 
 
 	}
 }
 }
-
-
-
-
-
+}
